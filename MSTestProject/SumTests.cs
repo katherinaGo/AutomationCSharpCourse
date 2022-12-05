@@ -1,51 +1,52 @@
-using CSharp.Calculator;
+using CSharpCalculator;
 
 namespace MSTestProject;
 
 [TestClass]
 public class SumTests
 {
+    private Calculator _calck;
+
     [TestInitialize]
     public void Init()
     {
-        Console.WriteLine("Test starts execution...");
+        _calck = new Calculator();
+        Console.WriteLine("Sum test starts execution...");
     }
 
-    [DataTestMethod]
-    [DataRow(3, 4)]
-    [DataRow(22, 0)]
-    [DataRow(-3, -4)]
-    [DataRow(-83, 43)]
-    public void SumTest(int a, int b)
+    [TestMethod]
+    [DataRow(3, 565)]
+    [DataRow(-34, 10000)]
+    [DataRow(0, 0.0001)]
+    public void SumPositiveTest(double a, double b)
     {
-        List<int> list = new List<int>
-        {
-            a,
-            b
-        };
-        var expectedResult = a + b;
-        var actualResult = Calculator.Sum(list);
-        Assert.AreEqual(expectedResult, actualResult, "Incorrect sum operation occurs.");
+        var actualResult = a + b;
+        var expectedResult = _calck.Add(a, b);
+        Assert.AreEqual(expectedResult, actualResult, "Sum is done incorrectly.");
     }
 
-    [DataTestMethod]
-    [DataRow(3 + 5 * 46, 4 - 6)]
-    [DataRow(2 - 5 * 4, 14 - 6)]
-    public void Sum2Test(int a, int b)
+    [TestMethod]
+    [DataRow(3 + 4 / 2 - 345, (54 + 34) / 2)]
+    [DataRow(67 * 56, 10000 * (-2))]
+    public void SumComplexVariablesTest(double a, double b)
     {
-        List<int> list = new List<int>
-        {
-            a,
-            b
-        };
-        var expectedResult = a + b;
-        var actualResult = Calculator.Sum(list);
-        Assert.AreEqual(expectedResult, actualResult, "Incorrect sum operation occurs.");
+        var actualResult = a + b;
+        var expectedResult = _calck.Add(a, b);
+        Assert.AreEqual(expectedResult, actualResult, "Sum is done incorrectly.");
+    }
+
+    [TestMethod]
+    [DataRow("3", "5")]
+    [DataRow("9", 3)]
+    [DataRow('v', null)]
+    public void SumThrowExceptionIfNotDoubleTest(object a, object c)
+    {
+        Assert.ThrowsException<InvalidCastException>(() => _calck.Add(a, c));
     }
 
     [TestCleanup]
     public void CleanUp()
     {
-        Console.WriteLine("Test finished execution!");
+        Console.WriteLine("Sum tests finished execution!");
     }
 }
