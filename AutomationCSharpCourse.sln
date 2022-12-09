@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSTestProject", "MSTestProj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitProject", "NUnitProject\NUnitProject.csproj", "{3C40DD9D-3981-4726-B8C1-2F807BCB1ED8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Selenium_Basics", "Selenium_Basics\Selenium_Basics.csproj", "{8E3F3E32-CF81-4AC6-9D60-B81BCC2009DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{3C40DD9D-3981-4726-B8C1-2F807BCB1ED8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C40DD9D-3981-4726-B8C1-2F807BCB1ED8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C40DD9D-3981-4726-B8C1-2F807BCB1ED8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E3F3E32-CF81-4AC6-9D60-B81BCC2009DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E3F3E32-CF81-4AC6-9D60-B81BCC2009DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E3F3E32-CF81-4AC6-9D60-B81BCC2009DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E3F3E32-CF81-4AC6-9D60-B81BCC2009DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
