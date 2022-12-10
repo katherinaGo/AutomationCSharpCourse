@@ -13,10 +13,11 @@ public class FindElementsTests : BaseTest
     [Test]
     public void ListOfAvailableCountriesTest()
     {
-        Thread.Sleep(2000);
         _driver
-            .FindElement(By.XPath("//*[@class='top-navigation__item-link' and contains(text(),'Careers')]"))
+            .FindElement(By.XPath(
+                "(//span[@class='top-navigation__item-link-holder--a11y']//preceding::span[@class='top-navigation__item-text'])[6]"))
             .Click();
+
         var actualListOfCountries = _driver
             .FindElements(By.XPath("//*[@class='tabs__title' and contains(@role,'presentation')]"))
             .Select(item => item.Text);
@@ -35,9 +36,9 @@ public class FindElementsTests : BaseTest
                 By.XPath("//*[@class='header-search__button header__icon' and contains(@aria-expanded, 'false')]"))
             .Click();
         _driver.FindElement(By.XPath("//*[@id='new_form_search']")).SendKeys(searchWord);
-        _driver.FindElement(By.XPath("//*[@class='header-search__submit']")).Click();
-        var actualResultUrl = $"https://www.epam.com/search?q={searchWord}";
-        Assert.That(_driver.Url, Is.EqualTo(actualResultUrl).IgnoreCase,
+        _driver.FindElement(By.XPath("//form[@action='/search']/child::button[@class='header-search__submit']"))
+            .Click();
+        Assert.That(_driver.Url, Does.Contain(searchWord.Replace(' ', '+')).IgnoreCase,
             $"Parameter in link doesn't contain '{searchWord}'.");
     }
 
@@ -51,10 +52,32 @@ public class FindElementsTests : BaseTest
             .Click();
         _driver.FindElement(By.XPath("//*[@id='new_form_search']")).SendKeys(searchWord);
         _driver.FindElement(By.XPath("//*[@class='header-search__submit']")).Click();
+
         var actualResultOfSearch = _driver
             .FindElements(By.XPath("//*[@class='search-results__item']"))
             .Take(5).Select(item => item.Text);
         Assert.That(actualResultOfSearch, Is.All.Contain(searchWord).IgnoreCase,
             $"There is no '{searchWord}' in the results.");
+    }
+
+    [Test]
+    [TestCase("Business Analysis")]
+    public void CheckTitleOfSearchCorrespondsArticleTest(string searchWord)
+    {
+        _driver
+            .FindElement(
+                By.XPath("//*[@class='header-search__button header__icon' and contains(@aria-expanded, 'false')]"))
+            .Click();
+        _driver.FindElement(By.XPath("//*[@id='new_form_search']")).SendKeys(searchWord);
+        _driver.FindElement(By.XPath("//*[@class='header-search__submit']")).Click();
+        Thread.Sleep(1500);
+
+        var expectedResultSearchPage = _driver.FindElement(By.XPath("(//*[@class='search-results__title'])[1]")).Text;
+        _driver.FindElement(By.XPath("(//*[@class='search-results__title-link'])[1]")).Click();
+
+        var actualResultOpenedPage = _driver
+            .FindElement(By.XPath("//*[@class='title']//parent::div[@class='layout-box__wrapper']")).Text;
+        Assert.That(expectedResultSearchPage, Is.EqualTo(actualResultOpenedPage),
+            "Title of the article doesn't correspond the article from search list.");
     }
 }
