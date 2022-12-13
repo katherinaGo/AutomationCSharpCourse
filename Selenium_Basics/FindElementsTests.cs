@@ -70,9 +70,9 @@ public class FindElementsTests : BaseTest
             .Click();
         _driver.FindElement(By.XPath("//*[@id='new_form_search']")).SendKeys(searchWord);
         _driver.FindElement(By.XPath("//*[@class='header-search__submit']")).Click();
-        Thread.Sleep(1500);
 
-        var expectedResultSearchPage = _driver.FindElement(By.XPath("(//*[@class='search-results__title'])[1]")).Text;
+        var expectedResultSearchPage = _waiter
+            .Until(_driver => _driver.FindElement(By.XPath("(//*[@class='search-results__title'])[1]"))).Text;
         _driver.FindElement(By.XPath("(//*[@class='search-results__title-link'])[1]")).Click();
 
         var actualResultOpenedPage = _driver
