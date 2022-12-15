@@ -21,7 +21,7 @@ public class EpamTests : BaseTest
     [Test]
     public void CheckListOfLanguagesTest()
     {
-        var expectedListOfLanguages = new List<string>()
+        var expectedListOfLanguages = new List<string>
         {
             "Global (English)",
             "Hungary (English)",
@@ -39,10 +39,9 @@ public class EpamTests : BaseTest
 
         var actualListOfLanguages =
             Waiter.Until(Driver => Driver.FindElements(By.XPath("//*[@class='location-selector__item']")))
-                .Select(item => item.Text);
-
-        Assert.That(actualListOfLanguages,
-            Is.EqualTo(expectedListOfLanguages),
+                .Select(item => item.GetAttribute("innerText"));
+        Assert.That(expectedListOfLanguages,
+            Is.EqualTo(actualListOfLanguages),
             "List of language doesn't correspond needed ones.");
     }
 
