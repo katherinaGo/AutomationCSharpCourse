@@ -15,7 +15,7 @@ public class FindElementsTests : BaseTest
     {
         _driver
             .FindElement(By.XPath(
-                "(//span[@class='top-navigation__item-link-holder--a11y']//preceding::span[@class='top-navigation__item-text'])[6]"))
+                "//*[contains(@Class, 'top-navigation__item-link') and @href='/careers']"))
             .Click();
 
         var actualListOfCountries = _driver
@@ -23,7 +23,7 @@ public class FindElementsTests : BaseTest
             .Select(item => item.Text);
         var expectedListOfCountries = new List<string> { "AMERICAS", "EMEA", "APAC" };
         Assert.That(expectedListOfCountries, Is.EqualTo(actualListOfCountries),
-            "List of countries doesn't include: AMERICAS, EMEA, APAC");
+            $"List of countries doesn't include: {string.Join(',', expectedListOfCountries)}");
     }
 
     [Test]
